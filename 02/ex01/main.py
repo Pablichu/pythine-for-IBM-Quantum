@@ -47,6 +47,6 @@ if __name__ == "__main__":
 	print('--------------')
 	obj = what_are_the_vars(42, a=10, var_0="world")
 	doom_printer(obj)
-	print('-------AAAAAAAAAAAAAAAAA-------')
+	print('--------------')
 	obj = what_are_the_vars(42, "Yes", a=10, var_2="world")
 	doom_printer(obj)
