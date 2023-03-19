@@ -1,43 +1,57 @@
-
+from math import sqrt
 
 def prev(func):
-	def check_it(*args, **kwargs):
-		x = args[1]
+	def check_it(self, x):
 		if not isinstance(x, list):
 			print('Not a list')
 			return None
-		if not all(isinstance(e, (int, float)) for e in x):
-			print('Not a number')
-			return None
-		return func(x)
+		return func(self, x)
 	return check_it
 
 class TinyStatistician:
 	@prev
-	def mean(x) -> float:
+	def mean(self, x) -> float:
 		'''Calcula la media'''
 		return sum(x) / len(x)
 
 	@prev
-	def median(x) -> float:
+	def median(self, x) -> float:
 		'''Calcula la mediana'''
 		x.sort()
 		total = len(x)
 		if total % 2 == 0:
-			return (x[int(total/2)] + x[int(total/2 -1)])  / 2
+			return (x[int(total/2)] + x[int(total/2 - 1)])  / 2
 		else:
 			return x[int(total/2)]
 
 	@prev
-	def quartiles(x) -> float:
+	def quartiles(self, x) -> list:
 		'''Calcula los cuartiles 1º y 3º'''
+		x.sort()
+		total = len(x)
+		quart = list()
+		if total % 2 == 0:
 
+			quart.append((x[total//4] + x[total//4 - 1])  / 2)
+			quart.append((x[3*total//4] + x[3*total//4 - 1])  / 2)
+		else:
+			quart.append(x[(total + 1)//4 - 1])
+			quart.append(x[(3*(total + 1))//4 - 1])
+		return quart
 	
 	@prev
-	def var(x) -> float:
+	def var(self, x) -> float:
 		'''Calcula la varianza'''
-
+		n = len(x)
+		med = self.mean(x)
+		total = 0.0
+		for nb in x:
+			total += (nb - med) ** 2
+		total /= n
+		return total
 
 	@prev
-	def std(x) -> float:
+	def std(self, x) -> float:
 		'''Calcula la desviacion estandar'''
+		val = self.var(x)
+		return sqrt(val)
